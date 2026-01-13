@@ -1,0 +1,6 @@
+@QuizVey.Api_HostAddress = http://localhost:5243
+
+GET {{QuizVey.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
