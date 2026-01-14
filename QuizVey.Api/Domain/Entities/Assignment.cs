@@ -39,7 +39,7 @@ namespace QuizVey.Api.Domain.Entities
                 throw new InvalidOperationException("Maximum number of attempts reached.");
         }
 
-            var attempt = new Attempt();
+            var attempt = new Attempt(UserId, AssessmentVersionId);
             _attempts.Add(attempt);
 
             return attempt;

@@ -65,5 +65,15 @@ namespace QuizVey.Api.Domain.Entities
             Status = AssessmentVersionStatus.Archived;
         }
 
+        public bool Evaluate(IReadOnlyCollection<AttemptAnswer> answers)
+        {
+            if (Type != AssessmentType.Quiz)
+                throw new InvalidOperationException("Only quizzes can be evaluated.");
+
+            // TEMPORARY implementation
+            // Always pass for now
+            return true;
+        }
+
     }
 }

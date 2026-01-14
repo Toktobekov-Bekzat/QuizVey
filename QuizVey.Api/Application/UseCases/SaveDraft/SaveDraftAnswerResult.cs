@@ -1,0 +1,1 @@
+public record SaveDraftAnswerResult(bool Success);
