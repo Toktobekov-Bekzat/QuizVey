@@ -41,7 +41,7 @@ namespace QuizVey.Api.Domain.Entities
         {
             if (Status != AssessmentVersionStatus.Active) throw new InvalidOperationException("Only active version can be cloned.");
             
-            var clone = new AssessmentVersion(AssessmentId, VersionNumber + 1);
+            var clone = new AssessmentVersion(AssessmentId, VersionNumber + 1, Type, RetakesAllowed, MaxAttempts);
 
             foreach (var question in _questions)
             {

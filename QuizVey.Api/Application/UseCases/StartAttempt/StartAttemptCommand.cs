@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuizVey.Api.Application.UseCases
-{
-    public record StartAttemptCommand
-    {
-        Guid AssignmentId;
-        Guid UserId;
-    }
-}
+namespace QuizVey.Api.Application.UseCases.StartAttempt;
+
+public record StartAttemptCommand(
+    Guid AssignmentId,
+    Guid UserId
+);

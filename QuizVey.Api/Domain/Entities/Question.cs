@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using QuizVey.Api.Domain.Enums;
 
 namespace QuizVey.Api.Domain.Entities
 {
@@ -15,7 +16,7 @@ namespace QuizVey.Api.Domain.Entities
 
         protected Question(){}
 
-        public Question(string text, string? description = null, QuestionType type)
+        public Question(string text, QuestionType type, string? description = null)
         {
             Text = text;
             Description = description;
@@ -24,7 +25,7 @@ namespace QuizVey.Api.Domain.Entities
 
         public Question Clone()
         {
-            return new Questions(Text, Type, Description);
+            return new Question(Text, Type, Description);
         }
     }
 }

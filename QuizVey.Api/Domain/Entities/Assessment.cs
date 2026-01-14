@@ -10,12 +10,12 @@ namespace QuizVey.Api.Domain.Entities
     public class Assessment : BaseEntity
     {
         public string Title { get; private set;}
-        private string Description {get; private set;} 
+        public string Description { get; private set; } 
 
         public AssessmentStatus Status {get; private set;} = AssessmentStatus.Draft;
 
-        private readonly List<AssessmentVersion> _version = new();
-        public IReadOnlyCollection<AssessmentVersion> Versions => _version.AsReadOnly();
+        private readonly List<AssessmentVersion> _versions = new();
+        public IReadOnlyCollection<AssessmentVersion> Versions => _versions.AsReadOnly();
 
         protected Assessment(){}
 
@@ -27,13 +27,13 @@ namespace QuizVey.Api.Domain.Entities
 
         public AssessmentVersion CreateNewVersionFromActive()
         {
-            var activeVersion = _versions.SingleOrDefault(v => v.Status == AssessmentStatus.Active);
+            var activeVersion = _versions.SingleOrDefault(v => v.Status == AssessmentVersionStatus.Active);
 
             if (activeVersion == null) throw new InvalidOperationException("No active version exists to duplicate");
 
             var newVersion = activeVersion.CloneAsDraft();
 
-            _version.Add(newVersion);
+            _versions.Add(newVersion);
 
             return newVersion;
         }
