@@ -122,6 +122,61 @@ namespace QuizVey.Api.Domain.Entities
             return scorePercentage >= PassingPercentage;
         }
 
+        public void SetPassingPercentage(int percentage)
+        {
+            if (Status != AssessmentVersionStatus.Draft)
+                throw new InvalidOperationException(
+                    "Passing percentage can only be changed in Draft."
+                );
+
+            if (percentage is < 0 or > 100)
+                throw new InvalidOperationException(
+                    "Passing percentage must be between 0 and 100."
+                );
+
+            PassingPercentage = percentage;
+        }
+
+        public void ConfigureAttempts(bool retakesAllowed, int? maxAttempts)
+        {
+            if (Status != AssessmentVersionStatus.Draft)
+                throw new InvalidOperationException(
+                    "Number of attempts can only be configured in draft versions."
+                );
+
+            if (Type == AssessmentType.Survey)
+                throw new InvalidOperationException(
+                    "Surveys cannot allow retakes."
+                );
+
+            if (!retakesAllowed)
+            {
+                // No retakes → maxAttempts must be null OR 1
+                if (maxAttempts.HasValue && maxAttempts.Value != 1)
+                    throw new InvalidOperationException(
+                        "When retakes are disabled, MaxAttempts must be 1 or null."
+                    );
+
+                RetakesAllowed = false;
+                MaxAttempts = maxAttempts ?? 1;
+                return;
+            }
+
+            // Retakes allowed → maxAttempts REQUIRED
+            if (!maxAttempts.HasValue)
+                throw new InvalidOperationException(
+                    "MaxAttempts must be specified when retakes are allowed."
+                );
+
+            if (maxAttempts.Value < 1)
+                throw new InvalidOperationException(
+                    "MaxAttempts must be at least 1."
+                );
+
+            RetakesAllowed = true;
+            MaxAttempts = maxAttempts.Value;
+        }
+
 
 
     }
