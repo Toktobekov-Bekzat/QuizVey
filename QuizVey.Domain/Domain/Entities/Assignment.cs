@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuizVey.Api.Domain.Enums;
-namespace QuizVey.Api.Domain.Entities
+using QuizVey.Domain.Enums;
+namespace QuizVey.Domain.Entities
 {
     public class Assignment : BaseEntity
     {

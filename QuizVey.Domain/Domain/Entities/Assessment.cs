@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Domain.Entities
+namespace QuizVey.Domain.Entities
 {
     public class Assessment : BaseEntity
     {

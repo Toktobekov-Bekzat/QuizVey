@@ -5,9 +5,9 @@ using System.Data.Common;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Domain.Entities
+namespace QuizVey.Domain.Entities
 {
     public class Attempt : BaseEntity
     {

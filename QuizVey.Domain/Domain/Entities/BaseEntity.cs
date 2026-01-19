@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuizVey.Api.Domain.Entities
+namespace QuizVey.Domain.Entities
 {
     public abstract class BaseEntity
     {

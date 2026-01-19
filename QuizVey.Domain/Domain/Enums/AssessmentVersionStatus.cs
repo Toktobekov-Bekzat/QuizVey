@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuizVey.Api.Domain.Enums
+namespace QuizVey.Domain.Enums
 {
     public enum AssessmentVersionStatus
     {

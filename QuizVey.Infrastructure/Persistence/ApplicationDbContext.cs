@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using QuizVey.Api.Domain.Entities;
+using QuizVey.Domain.Entities;
 
 namespace QuizVey.Infrastructure.Persistence
 {

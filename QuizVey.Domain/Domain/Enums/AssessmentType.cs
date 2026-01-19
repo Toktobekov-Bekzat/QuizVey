@@ -1,4 +1,4 @@
-namespace QuizVey.Api.Domain.Enums
+namespace QuizVey.Domain.Enums
 {
     public enum AssessmentType
     {

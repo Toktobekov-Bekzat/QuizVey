@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Domain.Entities
+namespace QuizVey.Domain.Entities
 {
     public class Question : BaseEntity
     {
