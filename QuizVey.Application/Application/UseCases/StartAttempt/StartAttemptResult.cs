@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Application.UseCases.StartAttempt;
+namespace QuizVey.Application.UseCases.StartAttempt;
 
 public record StartAttemptResult(
     Guid AttemptId,

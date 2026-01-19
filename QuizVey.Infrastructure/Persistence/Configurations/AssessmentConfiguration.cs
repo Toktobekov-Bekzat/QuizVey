@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using QuizVey.Api.Domain.Entities;
+using QuizVey.Domain.Entities;
 
 namespace QuizVey.Infrastructure.Persistence.Configurations;
 public class AssessmentConfiguration : IEntityTypeConfiguration<Assessment>

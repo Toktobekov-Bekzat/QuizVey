@@ -1,6 +1,6 @@
-using QuizVey.Api.Application.Interfaces;
+using QuizVey.Application.Interfaces;
 
-namespace QuizVey.Api.Application.UseCases.SaveDraftAnswer;
+namespace QuizVey.Application.UseCases.SaveDraftAnswer;
 
 public class SaveDraftAnswerHandler
 {

@@ -1,6 +1,7 @@
-using QuizVey.Api.Application.Interfaces;
-using QuizVey.Api.Domain.Entities;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Application.Interfaces;
+using QuizVey.Application.UseCases.CreateAssignment;
+using QuizVey.Domain.Entities;
+using QuizVey.Domain.Enums;
 
 namespace QuizVey.Api.Application.UseCases.CreateAssignment;
 

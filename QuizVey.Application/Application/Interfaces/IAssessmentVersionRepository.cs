@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using QuizVey.Api.Domain.Entities;
+using QuizVey.Domain.Entities;
 
-namespace QuizVey.Api.Application.Interfaces
+namespace QuizVey.Application.Interfaces
 {
     public interface IAssessmentVersionRepository
     {

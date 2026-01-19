@@ -1,4 +1,4 @@
-namespace QuizVey.Api.Application.UseCases.SaveDraftAnswer;
+namespace QuizVey.Application.UseCases.SaveDraftAnswer;
 
 public record SaveDraftAnswerCommand(
     Guid AttemptId,

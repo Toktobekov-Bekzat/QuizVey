@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using QuizVey.Api.Application.Interfaces;
+using QuizVey.Application.Interfaces;
+using QuizVey.Application.UseCases.StartAttempt;
 
-namespace QuizVey.Api.Application.UseCases.StartAttempt
+namespace QuizVey.Application.UseCases.StartAttempt
 {
     public class StartAttemptHandler
     {

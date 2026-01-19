@@ -1,4 +1,4 @@
-namespace QuizVey.Api.Application.UseCases.SubmitAttempt;
+namespace QuizVey.Application.UseCases.SubmitAttempt;
 
 public record SubmitAttemptCommand(
     Guid AttemptId,

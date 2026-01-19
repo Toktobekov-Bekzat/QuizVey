@@ -1,6 +1,6 @@
-using QuizVey.Api.Domain.Entities;
+using QuizVey.Domain.Entities;
 
-namespace QuizVey.Api.Application.Interfaces
+namespace QuizVey.Application.Interfaces
 {
     public interface IAttemptRepository
     {

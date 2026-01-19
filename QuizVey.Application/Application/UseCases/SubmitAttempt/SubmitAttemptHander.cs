@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
-using QuizVey.Api.Application.Interfaces;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Application.Interfaces;
+using QuizVey.Application.UseCases.SubmitAttempt;
+using QuizVey.Domain.Enums;
 
 namespace QuizVey.Api.Application.UseCases.SubmitAttempt
 {

@@ -1,6 +1,6 @@
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Application.UseCases.SubmitAttempt;
+namespace QuizVey.Application.UseCases.SubmitAttempt;
 
 public record SubmitAttemptResult(
     AttemptStatus Status
