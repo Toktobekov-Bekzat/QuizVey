@@ -1,4 +1,7 @@
 <Solution>
   <Project Path="QuizVey.Api/QuizVey.Api.csproj" />
+  <Project Path="QuizVey.Application/QuizVey.Application.csproj" />
+  <Project Path="QuizVey.Domain/QuizVey.Domain.csproj" />
+  <Project Path="QuizVey.Infrastructure/QuizVey.Infrastructure.csproj" />
   <Project Path="QuizVey.Tests/QuizVey.Tests.csproj" />
 </Solution>

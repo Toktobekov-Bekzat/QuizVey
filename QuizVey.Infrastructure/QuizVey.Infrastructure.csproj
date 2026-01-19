@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuizVey.Api\QuizVey.Api.csproj" />
+    <ProjectReference Include="..\QuizVey.Application\QuizVey.Application.csproj" />
   </ItemGroup>
 
 </Project>

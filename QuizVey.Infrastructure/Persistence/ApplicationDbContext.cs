@@ -37,4 +37,4 @@ namespace QuizVey.Infrastructure.Persistence
             }
         }
     }
-}   
+}

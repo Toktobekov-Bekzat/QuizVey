@@ -17,4 +17,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QuizVey.Application\QuizVey.Application.csproj" />
+    <ProjectReference Include="..\QuizVey.Infrastructure\QuizVey.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
