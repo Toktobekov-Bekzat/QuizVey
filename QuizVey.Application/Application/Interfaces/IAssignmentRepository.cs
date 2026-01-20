@@ -13,6 +13,6 @@ namespace QuizVey.Application.Interfaces
         Task<Assignment?> GetByIdAsync(Guid assignmentId);
         Task SaveAsync(Assignment assignment);
 
-        Task<bool> ExistsAsync(Guid userId, Guid AssessmentVersionId);
+        Task<bool> ExistsAsync(Guid userId, Guid assessmentVersionId);
     }
 }

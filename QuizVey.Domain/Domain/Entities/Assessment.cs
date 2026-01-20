@@ -10,7 +10,7 @@ namespace QuizVey.Domain.Entities
     public class Assessment : BaseEntity
     {
         public string Title { get; private set;}
-        public string Description { get; private set; } 
+        public string? Description { get; private set; }
 
         public AssessmentStatus Status {get; private set;} = AssessmentStatus.Draft;
 

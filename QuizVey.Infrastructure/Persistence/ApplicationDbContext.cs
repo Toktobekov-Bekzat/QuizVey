@@ -21,6 +21,11 @@ namespace QuizVey.Infrastructure.Persistence
         public DbSet<AttemptAnswer> AttemptAnswers => Set<AttemptAnswer>();
         public DbSet<AttemptDraftAnswer> AttemptDraftAnswers => Set<AttemptDraftAnswer>();
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+        {
+            // Store all enums as integers
+            builder.Properties<Enum>().HaveConversion<int>();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,20 +8,35 @@ public class AttemptConfiguration : IEntityTypeConfiguration<Attempt>
 {
     public void Configure(EntityTypeBuilder<Attempt> builder)
     {
-        builder.ToTable("Attempts");
+        builder.HasKey(x => x.Id);
 
-        builder.HasKey(a => a.Id);
+        builder.Property(x => x.UserId).IsRequired();
+        builder.Property(x => x.AssessmentVersionId).IsRequired();
+        builder.Property(x => x.Status).IsRequired();
 
-        builder.Property(a => a.UserId).IsRequired();
-        builder.Property(a => a.AssessmentVersionId).IsRequired();
-        builder.Property(a => a.Status).IsRequired();
+        // Ignore public read-only navigations
+        builder.Ignore(x => x.Answers);
+        builder.Ignore(x => x.DraftAnswers);
 
-        builder.Metadata
-            .FindNavigation(nameof(Attempt.Answers))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        // FINAL answers (backing field)
+        builder
+            .HasMany<AttemptAnswer>("_finalAnswers")
+            .WithOne()
+            .HasForeignKey(x => x.AttemptId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Metadata
-            .FindNavigation(nameof(Attempt.DraftAnswers))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Navigation("_finalAnswers")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        // DRAFT answers (backing field)
+        builder
+            .HasMany<AttemptDraftAnswer>("_draftAnswers")
+            .WithOne()
+            .HasForeignKey(x => x.AttemptId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Navigation("_draftAnswers")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }
+

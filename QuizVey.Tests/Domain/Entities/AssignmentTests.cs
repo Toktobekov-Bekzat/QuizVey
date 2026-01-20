@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using QuizVey.Api.Domain.Entities;
-using QuizVey.Api.Domain.Enums;
+using QuizVey.Domain.Entities;
+using QuizVey.Domain.Enums;
 using Xunit;
 
 namespace QuizVey.Tests.Domain.Entities
