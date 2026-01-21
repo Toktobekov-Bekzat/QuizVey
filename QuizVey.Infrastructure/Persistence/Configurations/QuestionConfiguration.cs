@@ -21,12 +21,21 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
         builder.Property(q => q.Description)
             .HasMaxLength(2000);
 
+        builder.Property(q => q.Order)
+            .IsRequired();
+
+        // OPTIONS backing field
+        builder.Property<List<string>>("_options")
+            .HasConversion(
+                v => string.Join("||", v),
+                v => v.Split("||", StringSplitOptions.RemoveEmptyEntries).ToList()
+            );
+
+        // CORRECT ANSWERS backing field
         builder.Property<List<string>>("_correctAnswers")
             .HasConversion(
                 v => string.Join("||", v),
                 v => v.Split("||", StringSplitOptions.RemoveEmptyEntries).ToList()
             );
-        builder.Property(q => q.Order)
-            .IsRequired();
     }
 }

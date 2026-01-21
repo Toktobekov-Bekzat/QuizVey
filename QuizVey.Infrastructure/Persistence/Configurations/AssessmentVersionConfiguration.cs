@@ -19,23 +19,26 @@ public class AssessmentVersionConfiguration : IEntityTypeConfiguration<Assessmen
         builder.Property(av => av.PassingPercentage)
             .HasDefaultValue(50);
 
+        // -------------------------------
+        // Relationship: Assessment → Versions
+        // -------------------------------
         builder.HasOne<Assessment>()
-            .WithMany("Versions")
+            .WithMany(a => a.Versions)
             .HasForeignKey(av => av.AssessmentId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Metadata
-            .FindNavigation(nameof(AssessmentVersion.Questions))!
-            .SetPropertyAccessMode(PropertyAccessMode.Field);
-
-        builder.HasMany(v => v.Questions)
+        // -------------------------------
+        // Questions collection (backing field, no FK property)
+        // -------------------------------
+        builder
+            .HasMany(av => av.Questions)
             .WithOne()
-            .HasForeignKey(q => q.AssessmentVersionId)
+            .HasForeignKey("AssessmentVersionId")            // <── shadow FK
             .OnDelete(DeleteBehavior.Cascade);
 
+        // Use backing-field mode
         builder.Metadata
             .FindNavigation(nameof(AssessmentVersion.Questions))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
-
     }
 }
