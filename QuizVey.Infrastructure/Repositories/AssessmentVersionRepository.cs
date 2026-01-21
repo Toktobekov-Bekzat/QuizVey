@@ -20,4 +20,10 @@ public class AssessmentVersionRepository : IAssessmentVersionRepository
             .Include(v => v.Questions.OrderBy(q => q.Order))
             .FirstOrDefaultAsync(v => v.Id == id);
     }
+
+    public async Task SaveAsync(AssessmentVersion assessmentVersion)
+    {
+        _context.AssessmentVersions.Update(assessmentVersion);
+        await _context.SaveChangesAsync();
+    }
 }

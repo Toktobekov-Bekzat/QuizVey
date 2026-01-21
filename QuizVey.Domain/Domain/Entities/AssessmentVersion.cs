@@ -55,6 +55,29 @@ namespace QuizVey.Domain.Entities
             _questions.Add(question);
         }
 
+        public void RemoveQuestion(Guid questionId)
+        {
+            if (Status != AssessmentVersionStatus.Draft)
+                throw new InvalidOperationException(
+                    "Questions can only be removed when the version is in Draft."
+                );
+
+            var question = _questions.SingleOrDefault(q => q.Id == questionId);
+
+            if (question == null)
+                throw new InvalidOperationException("Question not found in this version.");
+
+            // Remove the question
+            _questions.Remove(question);
+
+            // Reorder remaining questions: 1,2,3,4,...
+            int order = 1;
+            foreach (var q in _questions.OrderBy(q => q.Order))
+            {
+                q.SetOrder(order++);
+            }
+        }
+
         public AssessmentVersion CloneAsDraft()
         {
             if (Status != AssessmentVersionStatus.Active) throw new InvalidOperationException("Only active version can be cloned.");
