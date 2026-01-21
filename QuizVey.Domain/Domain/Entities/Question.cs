@@ -100,5 +100,32 @@ namespace QuizVey.Domain.Entities
                 _ => throw new InvalidOperationException($"Unsupported type {Type}")
             };
         }
+
+        public void Update(
+            string text,
+            string? description,
+            QuestionType type,
+            IEnumerable<string> options,
+            IEnumerable<string> correctAnswers)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                throw new ArgumentException("Question text cannot be empty.");
+
+            Text = text;
+            Description = description;
+            Type = type;
+
+            // Validate + apply options/correct answers
+            if (type != QuestionType.FreeText)
+            {
+                SetOptions(options, correctAnswers);
+            }
+            else
+            {
+                // Free text has no options
+                _options.Clear();
+                _correctAnswers.Clear();
+            }
+        }
     }
 }

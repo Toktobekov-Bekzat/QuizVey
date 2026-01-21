@@ -223,6 +223,25 @@ namespace QuizVey.Domain.Entities
             _questions.Sort((a, b) => a.Order.CompareTo(b.Order));
         }
 
+        public Question UpdateQuestion(
+            Guid questionId,
+            string text,
+            string? description,
+            QuestionType type,
+            IEnumerable<string> options,
+            IEnumerable<string> correctAnswers)
+        {
+        if (Status != AssessmentVersionStatus.Draft)
+            throw new InvalidOperationException("Only draft versions can be edited.");
+
+        var question = _questions.SingleOrDefault(q => q.Id == questionId)
+            ?? throw new InvalidOperationException("Question not found.");
+
+        question.Update(text, description, type, options, correctAnswers);
+
+        return question;
+        }
+
 
 
 
