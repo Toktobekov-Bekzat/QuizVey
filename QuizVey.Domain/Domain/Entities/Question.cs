@@ -7,9 +7,11 @@ namespace QuizVey.Domain.Entities
 {
     public class Question : BaseEntity
     {
+        public Guid AssessmentVersionId { get; private set; }
         public string Text { get; private set; }
         public string? Description { get; private set; }
         public QuestionType Type { get; private set; }
+        public int Order {get; private set; }
 
         private readonly List<string> _correctAnswers = new();
         public IReadOnlyCollection<string> CorrectAnswers => _correctAnswers.AsReadOnly();
@@ -26,6 +28,10 @@ namespace QuizVey.Domain.Entities
             Description = description;
         }
 
+        public void SetOrder(int order)
+        {
+            Order = order;
+        }
         public Question Clone()
         {
             var clone = new Question(Text, Type, Description);

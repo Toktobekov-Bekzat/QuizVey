@@ -38,6 +38,30 @@ namespace QuizVey.Domain.Entities
             return newVersion;
         }
 
+        public AssessmentVersion CreateVersion(
+            AssessmentType type,
+            bool retakesAllowed = false,
+            int? maxAttempts = null
+        )
+        {
+            int nextVersionNumber = _versions.Count == 0
+                ? 1
+                : _versions.Max(v => v.VersionNumber) + 1;
+
+            var version = new AssessmentVersion(
+                this.Id,
+                nextVersionNumber,
+                type,
+                retakesAllowed,
+                maxAttempts
+            );
+
+            _versions.Add(version);
+
+            return version;
+        }
+
+
         
 
     }

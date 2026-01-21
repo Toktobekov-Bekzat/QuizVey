@@ -3,7 +3,7 @@ using QuizVey.Application.UseCases.CreateAssignment;
 using QuizVey.Domain.Entities;
 using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Application.UseCases.CreateAssignment;
+namespace QuizVey.Application.UseCases.CreateAssignment;
 
 public class CreateAssignmentHandler
 {

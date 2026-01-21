@@ -9,5 +9,11 @@ namespace QuizVey.Application.Interfaces
     public interface IAssessmentRepository
     {
         Task<Assessment?> GetByIdAsync(Guid id);
+
+        Task AddAsync(Assessment assessment);
+
+        Task SaveAsync(Assessment assessment);
     }
+
+
 }

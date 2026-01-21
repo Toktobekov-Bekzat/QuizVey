@@ -17,7 +17,7 @@ public class AssessmentVersionRepository : IAssessmentVersionRepository
     public async Task<AssessmentVersion?> GetByIdAsync(Guid id)
     {
         return await _context.AssessmentVersions
-            .Include(v => v.Questions)
+            .Include(v => v.Questions.OrderBy(q => q.Order))
             .FirstOrDefaultAsync(v => v.Id == id);
     }
 }

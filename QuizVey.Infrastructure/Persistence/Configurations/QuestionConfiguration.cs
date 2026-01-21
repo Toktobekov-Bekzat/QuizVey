@@ -26,5 +26,7 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
                 v => string.Join("||", v),
                 v => v.Split("||", StringSplitOptions.RemoveEmptyEntries).ToList()
             );
+        builder.Property(q => q.Order)
+            .IsRequired();
     }
 }

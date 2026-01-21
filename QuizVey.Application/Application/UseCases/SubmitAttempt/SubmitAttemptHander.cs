@@ -7,7 +7,7 @@ using QuizVey.Application.Interfaces;
 using QuizVey.Application.UseCases.SubmitAttempt;
 using QuizVey.Domain.Enums;
 
-namespace QuizVey.Api.Application.UseCases.SubmitAttempt
+namespace QuizVey.Application.UseCases.SubmitAttempt
 {
     public class SubmitAttemptHandler
     {

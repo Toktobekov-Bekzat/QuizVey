@@ -27,5 +27,15 @@ public class AssessmentVersionConfiguration : IEntityTypeConfiguration<Assessmen
         builder.Metadata
             .FindNavigation(nameof(AssessmentVersion.Questions))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.HasMany(v => v.Questions)
+            .WithOne()
+            .HasForeignKey(q => q.AssessmentVersionId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Metadata
+            .FindNavigation(nameof(AssessmentVersion.Questions))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
     }
 }

@@ -38,6 +38,8 @@ namespace QuizVey.Domain.Entities
             MaxAttempts = maxAttempts;
         }
 
+        
+
         public void AddQuestion(Question question)
         {
             if (Status != AssessmentVersionStatus.Draft)
@@ -48,6 +50,8 @@ namespace QuizVey.Domain.Entities
             if (question == null)
                 throw new ArgumentNullException(nameof(question));
 
+            int nextOrder = _questions.Count == 0 ? 1 : _questions.Max(q => q.Order) + 1;
+            question.SetOrder(nextOrder);
             _questions.Add(question);
         }
 
@@ -176,6 +180,26 @@ namespace QuizVey.Domain.Entities
             RetakesAllowed = true;
             MaxAttempts = maxAttempts.Value;
         }
+
+        public void ReorderQuestions(List<Guid> orderedIds)
+        {
+            if (Status != AssessmentVersionStatus.Draft)
+                throw new InvalidOperationException("Reorder only allowed in Draft.");
+
+            if (orderedIds.Count != _questions.Count)
+                throw new InvalidOperationException("Invalid question count.");
+
+            var dict = _questions.ToDictionary(q => q.Id);
+
+            for (int i = 0; i < orderedIds.Count; i++)
+            {
+                var q = dict[orderedIds[i]];
+                q.SetOrder(i + 1);
+            }
+
+            _questions.Sort((a, b) => a.Order.CompareTo(b.Order));
+        }
+
 
 
 

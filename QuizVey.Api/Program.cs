@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using QuizVey.Api.Application.UseCases.CreateAssignment;
-using QuizVey.Api.Application.UseCases.SubmitAttempt;
+using QuizVey.Application.UseCases.CreateAssignment;
+using QuizVey.Application.UseCases.SubmitAttempt;
 using QuizVey.Application.Interfaces;
 using QuizVey.Application.UseCases.StartAttempt;
 using QuizVey.Infrastructure.Persistence;
 using QuizVey.Infrastructure.Repositories;
+using QuizVey.Application.UseCases.CreateAssessment;
+using QuizVey.Application.UseCases.CreateAssessmentVersion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddScoped<IAttemptRepository, AttemptRepository>();
 builder.Services.AddScoped<CreateAssignmentHandler>();
 builder.Services.AddScoped<StartAttemptHandler>();
 builder.Services.AddScoped<SubmitAttemptHandler>();
+builder.Services.AddScoped<CreateAssessmentHandler>();
+builder.Services.AddScoped<CreateAssessmentVersionHandler>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
