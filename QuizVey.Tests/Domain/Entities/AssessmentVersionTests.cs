@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using QuizVey.Domain.Entities;
 using QuizVey.Domain.Enums;
 using Xunit;
@@ -11,10 +10,10 @@ namespace QuizVey.Tests.Domain.Entities
     public class AssessmentVersionTests
     {
         [Fact]
-        public void Evaluate_PartialAnswers_ShouldPass_WhenThresholdMet()
+        public void EvaluateQuiz_PartialAnswers_ShouldPass_WhenThresholdMet()
         {
             // ---------- Arrange ----------
-            var version = CreateQuizVersion(passingPercentage: 50);
+            var version = CreateVersionWithPassingThreshold(50);
 
             var q1 = CreateQuestion("Q1", "A");
             var q2 = CreateQuestion("Q2", "B");
@@ -28,6 +27,7 @@ namespace QuizVey.Tests.Domain.Entities
             version.AddQuestion(q4);
             version.AddQuestion(q5);
 
+            // 3 out of 5 correct = 60% → should pass 50% threshold
             var answers = new List<AttemptAnswer>
             {
                 new AttemptAnswer(Guid.NewGuid(), q1.Id, "A"),
@@ -36,18 +36,24 @@ namespace QuizVey.Tests.Domain.Entities
             };
 
             // ---------- Act ----------
-            var result = version.Evaluate(answers);
+            var result = version.EvaluateQuiz(answers);
 
             // ---------- Assert ----------
             Assert.True(result);
         }
 
-        private static AssessmentVersion CreateQuizVersion(int passingPercentage)
+
+        // ----------------------------------------------------------
+        // Helpers
+        // ----------------------------------------------------------
+
+        private static AssessmentVersion CreateVersionWithPassingThreshold(int passingPercentage)
         {
             var version = new AssessmentVersion(
-                Guid.NewGuid(),
-                1,
-                AssessmentType.Quiz
+                Guid.NewGuid(),    // assessmentId
+                1,                 // versionNumber
+                retakesAllowed: false,
+                maxAttempts: null
             );
 
             typeof(AssessmentVersion)
@@ -59,10 +65,18 @@ namespace QuizVey.Tests.Domain.Entities
 
         private static Question CreateQuestion(string text, string correctAnswer)
         {
-            var question = new Question(text, QuestionType.SingleChoice);
-            question.SetCorrectAnswers(new[] { correctAnswer });
-            return question;
+            var q = new Question(text, QuestionType.SingleChoice);
+
+            // Apply options + correct answers
+            q.Update(
+                text,
+                description: null,
+                type: QuestionType.SingleChoice,
+                options: new[] { correctAnswer },
+                correctAnswers: new[] { correctAnswer }
+            );
+
+            return q;
         }
-        
     }
 }

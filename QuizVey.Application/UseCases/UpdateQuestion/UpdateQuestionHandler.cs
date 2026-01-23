@@ -23,7 +23,7 @@ namespace QuizVey.Application.UseCases.UpdateQuestion
             throw new InvalidOperationException("Assessment version not found");
 
         // domain handles update logic + validation
-        var updated = version.UpdateQuestion(
+        version.UpdateQuestion(
             command.QuestionId,
             command.Text,
             command.Description,

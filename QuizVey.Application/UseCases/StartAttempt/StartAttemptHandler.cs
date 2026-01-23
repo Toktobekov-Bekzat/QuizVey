@@ -11,9 +11,14 @@ namespace QuizVey.Application.UseCases.StartAttempt
     {
         private readonly IAssignmentRepository _assignmentRepository;
         private readonly IAssessmentVersionRepository _assessmentVersionRepository;
+        private readonly IAssessmentRepository _assessmentRepository;
 
-        public StartAttemptHandler(IAssignmentRepository assignmentRepository, IAssessmentVersionRepository assessmentVersionRepository)
+        public StartAttemptHandler(
+            IAssessmentRepository assessmentRepository,
+            IAssignmentRepository assignmentRepository, 
+            IAssessmentVersionRepository assessmentVersionRepository)
         {
+            _assessmentRepository = assessmentRepository;
             _assignmentRepository = assignmentRepository;
             _assessmentVersionRepository = assessmentVersionRepository;
         }
@@ -35,7 +40,10 @@ namespace QuizVey.Application.UseCases.StartAttempt
             if (version == null)
                 throw new InvalidOperationException("Assessment version not found.");
 
-            var attempt = assignment.StartAttempt(version);
+            var assessment = await _assessmentRepository.GetByIdAsync(version.AssessmentId)
+                ?? throw new InvalidOperationException("Assessment not found.");
+
+            var attempt = assignment.StartAttempt(assessment, version);
 
             await _assignmentRepository.SaveAsync(assignment);
 

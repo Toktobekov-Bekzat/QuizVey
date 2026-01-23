@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuizVey.Domain.Entities;
 
 namespace QuizVey.Infrastructure.Persistence.Configurations;
+
 public class AssessmentConfiguration : IEntityTypeConfiguration<Assessment>
 {
     public void Configure(EntityTypeBuilder<Assessment> builder)
     {
         builder.ToTable("Assessments");
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(a => a.Id);
 
         builder.Property(a => a.Title)
             .IsRequired()
@@ -18,7 +19,13 @@ public class AssessmentConfiguration : IEntityTypeConfiguration<Assessment>
         builder.Property(a => a.Description)
             .HasMaxLength(2000);
 
-        // Tell EF to use the private field for versions
+        builder.Property(a => a.Type)
+            .IsRequired();
+
+        builder.Property(a => a.Status)
+            .IsRequired();
+
+        // Backing field for Versions
         builder.Metadata
             .FindNavigation(nameof(Assessment.Versions))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);

@@ -17,8 +17,10 @@ public class CreateAssessmentHandler
 
     public async Task<CreateAssessmentResult> Handle(CreateAssessmentCommand command)
     {
-        var assessment = new Assessment(command.Title, command.Description);
+        var assessment = new Assessment(command.Title, command.Type, command.Description);
+
         await _assessmentRepository.AddAsync(assessment);
+        await _assessmentRepository.SaveAsync(assessment);
 
         return new CreateAssessmentResult(assessment.Id);
     }

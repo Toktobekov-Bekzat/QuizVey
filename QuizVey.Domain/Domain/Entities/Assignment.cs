@@ -21,15 +21,15 @@ namespace QuizVey.Domain.Entities
             AssessmentVersionId = assessmentVersionId;
         }
 
-        public Attempt StartAttempt(AssessmentVersion version)
+        public Attempt StartAttempt(Assessment assessment, AssessmentVersion version)
         {
             if (_attempts.Any(a => a.IsInProgress))
         throw new InvalidOperationException("An attempt is already in progress.");
 
-        if (version.Type == AssessmentType.Survey && _attempts.Any())
+        if (assessment.Type == AssessmentType.Survey && _attempts.Any())
             throw new InvalidOperationException("Surveys do not allow retakes.");
 
-        if (version.Type == AssessmentType.Quiz)
+        if (assessment.Type == AssessmentType.Quiz)
         {
             if (!version.RetakesAllowed && _attempts.Any())
                 throw new InvalidOperationException("Retakes are not allowed for this quiz.");

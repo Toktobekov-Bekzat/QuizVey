@@ -13,16 +13,14 @@ public class CreateAssessmentVersionHandler
         _assessmentRepository = assessmentRepository;
     }
 
-    public async Task<CreateAssessmentVersionResult> Hanle(CreateAssessmentVersionCommand command)
+    public async Task<CreateAssessmentVersionResult> Handle(CreateAssessmentVersionCommand command)
     {
         var assessment = await _assessmentRepository.GetByIdAsync(command.AssessmentId);
         if (assessment == null)
             throw new InvalidOperationException("Assessment not found.");
 
-        var version = assessment.CreateVersion(
-        command.Type,
-        command.RetakesAllowed,
-        command.MaxAttemptsAllowed);
+        // Create a cloned version from the latest version
+        var version = assessment.CreateNewVersion();
 
         await _assessmentRepository.SaveAsync(assessment);
 

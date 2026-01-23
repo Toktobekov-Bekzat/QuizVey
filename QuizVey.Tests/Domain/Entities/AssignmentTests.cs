@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using QuizVey.Domain.Entities;
 using QuizVey.Domain.Enums;
 using Xunit;
@@ -13,30 +10,28 @@ namespace QuizVey.Tests.Domain.Entities
         [Fact]
         public void Assignment_ShouldNotAllow_SecondInProgressAttempt()
         {
+            // ---------- Arrange ----------
             var userId = Guid.NewGuid();
-            var assessmentVersionId = Guid.NewGuid();
 
-            var assignment = new Assignment(userId, assessmentVersionId);
-
-            var version = CreateQuizVersion();
-
-            assignment.StartAttempt(version);
-
-            Assert.Throws<InvalidOperationException>(() =>
-                assignment.StartAttempt(version)
-            );
-        }
-        
-        private static AssessmentVersion CreateQuizVersion()
-        {
-            var version = new AssessmentVersion(
-                Guid.NewGuid(),
-                versionNumber: 1,
+            // Assessment of type QUIZ
+            var assessment = new Assessment(
+                title: "Sample Quiz",
                 type: AssessmentType.Quiz,
-                retakesAllowed: true
+                description: null
             );
 
-            return version;
+            // First version was auto-created by Assessment constructor
+            var version = assessment.Versions.First();
+
+            var assignment = new Assignment(userId, version.Id);
+
+            // ---------- Act ----------
+            assignment.StartAttempt(assessment, version);
+
+            // ---------- Assert ----------
+            Assert.Throws<InvalidOperationException>(() =>
+                assignment.StartAttempt(assessment, version)
+            );
         }
     }
 }

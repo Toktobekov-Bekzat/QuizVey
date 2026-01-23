@@ -13,38 +13,42 @@ namespace QuizVey.Application.UseCases.SubmitAttempt
     {
         private readonly IAttemptRepository _attemptRepository;
         private readonly IAssessmentVersionRepository _assessmentVersionRepository;
+        private readonly IAssessmentRepository _assessmentRepository;
 
         public SubmitAttemptHandler(
-            IAttemptRepository attemptRepository, 
-            IAssessmentVersionRepository assessmentVersionRepository)
+            IAttemptRepository attemptRepository,
+            IAssessmentVersionRepository assessmentVersionRepository,
+            IAssessmentRepository assessmentRepository)
         {
             _attemptRepository = attemptRepository;
             _assessmentVersionRepository = assessmentVersionRepository;
+            _assessmentRepository = assessmentRepository;
         }
 
         public async Task<SubmitAttemptResult> Handle(SubmitAttemptCommand command)
         {
-            var attempt = await _attemptRepository.GetByIdAsync(command.AttemptId);
-
-            if (attempt == null)
-            {
-                throw new InvalidOperationException("Attempt not found.");
-            }
+            // 1. Load attempt
+            var attempt = await _attemptRepository.GetByIdAsync(command.AttemptId)
+                ?? throw new InvalidOperationException("Attempt not found.");
 
             if (command.UserId != attempt.UserId)
-            {
                 throw new UnauthorizedAccessException();
-            }
 
+            // 2. Load version
             var version = await _assessmentVersionRepository
                 .GetByIdAsync(attempt.AssessmentVersionId)
                 ?? throw new InvalidOperationException("Assessment version not found.");
 
+            // 3. Load parent assessment to read its TYPE
+            var assessment = await _assessmentRepository.GetByIdAsync(version.AssessmentId)
+                ?? throw new InvalidOperationException("Parent assessment not found.");
+
+            // 4. Process answers
             var finalAnswers = attempt.SubmitDraftAnswers();
 
-            if (version.Type == AssessmentType.Quiz)
+            if (assessment.Type == AssessmentType.Quiz)
             {
-                var passed = version.Evaluate(finalAnswers);
+                var passed = version.EvaluateQuiz(finalAnswers);
                 attempt.CompleteQuiz(passed);
             }
             else
@@ -52,6 +56,7 @@ namespace QuizVey.Application.UseCases.SubmitAttempt
                 attempt.CompleteSurvey();
             }
 
+            // 5. Save
             await _attemptRepository.SaveAsync(attempt);
 
             return new SubmitAttemptResult(attempt.Status);
